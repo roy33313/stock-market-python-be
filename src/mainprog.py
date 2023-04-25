@@ -21,7 +21,7 @@ def predrop():
     stock_name = []
 
     data22 = data + '.csv'
-    data33 = 'C:/Users/royal/OneDrive/Desktop/Stock-Market-Prediction/stock_market_prediction-main/stock_market_prediction-main/To_send/Data1/' + data22
+    data33 = 'C:/Users/royal/OneDrive/Desktop/Stock-Market-Prediction/stock_market_prediction-main/stock_market_prediction-main/datasets/' + data22
     dataframes = pd.read_csv(data33)
     stock_name = data
     dataframes['Adj Close'].plot()
