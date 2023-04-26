@@ -21,20 +21,21 @@ def predrop():
     stock_name = []
 
     data22 = data + '.csv'
-    data33 = 'C:/Users/royal/OneDrive/Desktop/Stock-Market-Prediction/stock_market_prediction-main/stock_market_prediction-main/datasets/' + data22
+    data33 = 'C:/Users/S Kiran/Programs Kiran/stock-market-python-be/datasets/' + data22
     dataframes = pd.read_csv(data33)
     stock_name = data
     dataframes['Adj Close'].plot()
     plt.ylabel('Adj Close')
     plt.xlabel(None)
-    plt.title(f"Closing Price of {stock_name[0]}")
+    plt.title(f"Closing Price of {stock_name}")
+    plt.savefig("C:/Users/S Kiran/Programs Kiran/stock-market-python-be/src/assets/closing.png")
 
     dataframes['Volume'].plot()
     plt.ylabel('Volume')
     plt.xlabel(None)
-    plt.title(f"Volume of {stock_name[0]}")
+    plt.title(f"Volume of {stock_name}")
     plt.savefig(
-        "somefig.png")
+        "assets/volume.png")
 
     # plt.show()
 
@@ -168,7 +169,7 @@ def predrop():
         plt.legend(['Training Data', 'Validated Data',
                     'Predicted Data'], loc='lower right')
         plt.savefig(
-            "mainImage3.png")
+            "assets/chart.png")
 
         # plt.show()
 
@@ -186,7 +187,7 @@ def predrop():
 
 @app.route('/predictinfo/getImage')
 def get_image():
-    image_filename = 'graph.png'
+    image_filename = 'assets/'+request.args.get("graph")+'.png'
     return send_file(image_filename, mimetype='image/png')
 
 
