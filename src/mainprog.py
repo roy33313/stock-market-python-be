@@ -6,12 +6,15 @@ from keras import Sequential
 from keras.layers import Conv2D, Flatten, Dense, LSTM
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np  # linear algebra
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from keras.models import load_model
 from easygui import *
 import tensorflow as tf
+from flask_cors import CORS
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route('/predict', methods=['POST'])
 def predrop():
@@ -182,7 +185,7 @@ def predrop():
     response = predicted_main_out
     predicted_main_out = predicted_main_out.astype(float)
     data_dict = {"predicted_main_out": predicted_main_out.tolist()}
-    return str(data_dict)
+    return jsonify(data_dict)
 
 
 @app.route('/predictinfo/getImage')
