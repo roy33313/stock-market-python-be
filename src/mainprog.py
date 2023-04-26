@@ -39,7 +39,7 @@ def predrop():
     plt.xlabel(None)
     plt.title(f"Volume of {stock_name}")
     plt.savefig(
-        "assets/volume.png")
+        "C:/Users/S Kiran/Programs Kiran/stock-market-python-be/src/assets/volume.png")
 
     # plt.show()
 
@@ -173,7 +173,7 @@ def predrop():
         plt.legend(['Training Data', 'Validated Data',
                     'Predicted Data'], loc='lower right')
         plt.savefig(
-            "assets/chart.png")
+            "C:/Users/S Kiran/Programs Kiran/stock-market-python-be/src/assets/chart.png")
 
         # plt.show()
 
@@ -191,7 +191,7 @@ def predrop():
 
 @app.route('/predictinfo/getImage')
 def get_image():
-    image_filename = 'assets/'+request.args.get("graph")+'.png'
+    image_filename = 'C:/Users/S Kiran/Programs Kiran/stock-market-python-be/src/assets/'+request.args.get("graph")+'.png'
     return send_file(image_filename, mimetype='image/png')
 
 
