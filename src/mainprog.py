@@ -1,3 +1,8 @@
+from flask_cors import CORS
+import tensorflow as tf
+from easygui import *
+from keras.models import load_model
+import matplotlib.pyplot as plt
 from flask import *
 import os
 import pandas as pd
@@ -8,13 +13,12 @@ from sklearn.preprocessing import MinMaxScaler
 import numpy as np  # linear algebra
 import matplotlib
 matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from keras.models import load_model
-from easygui import *
-import tensorflow as tf
-from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
+
+absolute_path = os.path.dirname(__file__)
+relative_path = "src/lib"
+
 
 @app.route('/predict', methods=['POST'])
 def predrop():
@@ -25,21 +29,21 @@ def predrop():
     stock_name = []
 
     data22 = data + '.csv'
-    data33 = 'C:/Users/S Kiran/Programs Kiran/stock-market-python-be/datasets/' + data22
+    data33 = "C:/Users/royal/OneDrive/Desktop/Stock-Market-Prediction/stock-market-python-be/datasets/"+data22
     dataframes = pd.read_csv(data33)
     stock_name = data
     dataframes['Adj Close'].plot()
     plt.ylabel('Adj Close')
     plt.xlabel(None)
     plt.title(f"Closing Price of {stock_name}")
-    plt.savefig("C:/Users/S Kiran/Programs Kiran/stock-market-python-be/src/assets/closing.png")
+    plt.savefig(
+        os.path.join(absolute_path, "assets/closing.png"))
 
     dataframes['Volume'].plot()
     plt.ylabel('Volume')
     plt.xlabel(None)
     plt.title(f"Volume of {stock_name}")
-    plt.savefig(
-        "C:/Users/S Kiran/Programs Kiran/stock-market-python-be/src/assets/volume.png")
+    plt.savefig(os.path.join(absolute_path, "assets/volume.png"))
 
     # plt.show()
 
@@ -172,8 +176,7 @@ def predrop():
         plt.plot(valid[['Close', 'Predictions']])
         plt.legend(['Training Data', 'Validated Data',
                     'Predicted Data'], loc='lower right')
-        plt.savefig(
-            "C:/Users/S Kiran/Programs Kiran/stock-market-python-be/src/assets/chart.png")
+        plt.savefig(os.path.join(absolute_path, "assets/chart.png"))
 
         # plt.show()
 
@@ -191,7 +194,8 @@ def predrop():
 
 @app.route('/predictinfo/getImage')
 def get_image():
-    image_filename = 'C:/Users/S Kiran/Programs Kiran/stock-market-python-be/src/assets/'+request.args.get("graph")+'.png'
+    image_filename = os.path.join(
+        absolute_path, 'assets/')+request.args.get("graph")+'.png'
     return send_file(image_filename, mimetype='image/png')
 
 
