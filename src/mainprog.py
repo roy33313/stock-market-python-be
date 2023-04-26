@@ -6,17 +6,21 @@ from keras import Sequential
 from keras.layers import Conv2D, Flatten, Dense, LSTM
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np  # linear algebra
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from keras.models import load_model
 from easygui import *
 import tensorflow as tf
+from flask_cors import CORS
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route('/predict', methods=['POST'])
 def predrop():
-    data = request.form['comment']
-    data1 = request.form['comment1']
+    jsonData = request.get_json()
+    data = jsonData["stock"]
+    data1 = jsonData["movingAverage"]
     dataframes = []
     stock_name = []
 
@@ -108,7 +112,7 @@ def predrop():
         # Compile the model
         # adam ~ Stochastic Gradient descent method.
         model.compile(optimizer='adam', loss='mean_squared_error')
-    
+
         model.fit(x_train, y_train, batch_size=1, epochs=1)
         return model
 
@@ -182,7 +186,7 @@ def predrop():
     response = predicted_main_out
     predicted_main_out = predicted_main_out.astype(float)
     data_dict = {"predicted_main_out": predicted_main_out.tolist()}
-    return str(data_dict)
+    return jsonify(data_dict)
 
 
 @app.route('/predictinfo/getImage')
