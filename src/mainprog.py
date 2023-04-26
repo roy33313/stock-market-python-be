@@ -15,8 +15,9 @@ app = Flask(__name__)
 
 @app.route('/predict', methods=['POST'])
 def predrop():
-    data = request.form['comment']
-    data1 = request.form['comment1']
+    jsonData = request.get_json()
+    data = jsonData["stock"]
+    data1 = jsonData["movingAverage"]
     dataframes = []
     stock_name = []
 
@@ -107,7 +108,7 @@ def predrop():
         # Compile the model
         # adam ~ Stochastic Gradient descent method.
         model.compile(optimizer='adam', loss='mean_squared_error')
-    
+
         model.fit(x_train, y_train, batch_size=1, epochs=1)
         return model
 
