@@ -192,7 +192,7 @@ def predrop():
     return jsonify(data_dict)
 
 
-@app.route('/predictinfo/getImage')
+@app.route('/predict/getImage')
 def get_image():
     image_filename = os.path.join(
         absolute_path, 'assets/')+request.args.get("graph")+'.png'
